@@ -1,3 +1,4 @@
+import numpy as np
 import pyhf
 from pyhf import events
 from pyhf.tensor.manager import get_backend
@@ -62,9 +63,7 @@ class ParamViewer:
         default_backend = pyhf.default_backend
 
         batch_size = shape[0] if len(shape) > 1 else None
-
-        fullsize = default_backend.product(default_backend.astensor(shape))
-        flat_indices = default_backend.astensor(range(int(fullsize)), dtype='int')
+        flat_indices = np.arange(np.prod(shape))
         self._all_indices = default_backend.reshape(flat_indices, shape)
 
         # a tensor viewer that can split and stitch parameters
